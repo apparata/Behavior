@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:../Behavior copy.xctestplan"
+            reference = "container:Sources/Behavior.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>

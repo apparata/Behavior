@@ -24,6 +24,8 @@ public final class Repeat<Context>: BuiltInBehaviorTask<Context> {
         self.iterations = iterations
         self.remainingIterations = self.iterations.count.map { max(0, $0) }
         self.sequence = Sequence(sequence)
+        super.init()
+        self.sequence.parent = self
     }
 
     public init(
@@ -33,6 +35,8 @@ public final class Repeat<Context>: BuiltInBehaviorTask<Context> {
         self.iterations = iterations
         self.remainingIterations = self.iterations.count.map { max(0, $0) }
         self.sequence = Sequence(sequence)
+        super.init()
+        self.sequence.parent = self
     }
 
     public override func run(

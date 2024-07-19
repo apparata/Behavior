@@ -14,10 +14,18 @@ public final class Fallback<Context>: BuiltInBehaviorTask<Context> {
 
     public init(_ children: [BehaviorTask<Context>]) {
         self.children = children
+        super.init()
+        for child in self.children {
+            child.parent = self
+        }
     }
 
     public init(@BehaviorTreeBuilder<Context> _ children: () -> [BehaviorTask<Context>]) {
         self.children = children()
+        super.init()
+        for child in self.children {
+            child.parent = self
+        }
     }
 
     public override func run(

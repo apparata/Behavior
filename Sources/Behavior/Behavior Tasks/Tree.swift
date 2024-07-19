@@ -22,6 +22,8 @@ public final class Tree<Context>: BuiltInBehaviorTask<Context> {
     public init(_ name: String, _ sequence: [BehaviorTask<Context>]) {
         self.name = name
         self.sequence = Sequence(sequence)
+        super.init()
+        self.sequence.parent = self
     }
 
     public init(
@@ -30,6 +32,8 @@ public final class Tree<Context>: BuiltInBehaviorTask<Context> {
     ) {
         self.name = name
         self.sequence = Sequence(sequence)
+        super.init()
+        self.sequence.parent = self
     }
 
     public override func run(

@@ -2,12 +2,18 @@ import Foundation
 
 open class BehaviorTask<Context>: CustomStringConvertible {
 
+    public typealias Tag = String
+
     /// If the `state` is `nil`, the task has not started running yet.
-    public private(set) var state: BehaviorState?
+    public internal(set) var state: BehaviorState?
 
     public var isFirstRun: Bool {
         state == nil
     }
+
+    public private(set) var tag: Tag?
+
+    public weak var parent: BehaviorTask<Context>?
 
     open var description: String {
         "\(Self.self)"
@@ -46,6 +52,11 @@ open class BehaviorTask<Context>: CustomStringConvertible {
     /// Remember to call the `super.reset()` if overriding this function.
     open func reset() {
         state = nil
+    }
+
+    public func tag(_ tag: Tag) -> BehaviorTask<Context> {
+        self.tag = tag
+        return self
     }
 }
 

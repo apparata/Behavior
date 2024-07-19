@@ -18,6 +18,8 @@ public final class While<Context>: BuiltInBehaviorTask<Context> {
     public init(_ condition: BehaviorTask<Context>, _ sequence: [BehaviorTask<Context>]) {
         self.condition = condition
         self.sequence = Sequence(sequence)
+        super.init()
+        self.sequence.parent = self
     }
 
     public init(
@@ -26,6 +28,8 @@ public final class While<Context>: BuiltInBehaviorTask<Context> {
     ) {
         self.condition = condition
         self.sequence = Sequence(sequence)
+        super.init()
+        self.sequence.parent = self
     }
 
     public override func run(
