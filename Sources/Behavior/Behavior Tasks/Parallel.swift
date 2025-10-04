@@ -39,7 +39,7 @@ public final class Parallel<Context>: BuiltInBehaviorTask<Context> {
             switch task.tick(for: context, time: time, behavior: behavior) {
             case .running:
                 result = .running
-                break loop
+                continue loop
             case .failed:
                 result = .failed
                 break loop
