@@ -1,17 +1,41 @@
 import Foundation
 
-/// The `Fallback` task runs its child one by one, from top to bottom, as long as they fail.
-/// It succeeds on the first child that succeeds and it fails when all children fail.
+/// A composite task that tries children sequentially until one succeeds.
 ///
-/// Returns:
-/// - `.running` if a child is running.
-/// - `.succeeded` if one child has succeeded.
-/// - `.failed` if all the children have failed.
+/// The `Fallback` task (also known as "Selector") is one of the fundamental composite nodes
+/// in behavior trees. It runs its children one by one, from top to bottom, as long as they fail.
+/// It's the behavior tree equivalent of a logical OR operation.
 ///
+/// ## Behavior
+///
+/// - Executes children in order
+/// - Stops and returns `.succeeded` immediately when a child succeeds
+/// - Continues to the next child when one fails
+/// - Returns `.failed` only when all children have failed
+///
+/// ## Returns
+///
+/// - `.running` if a child is currently running
+/// - `.succeeded` if any child has succeeded
+/// - `.failed` if all children have failed
+///
+/// ## Example
+///
+/// ```swift
+/// Fallback {
+///     HasAmmo()          // Try this first
+///     FindAmmo()         // If no ammo, try to find some
+///     Retreat()          // If can't find ammo, retreat
+/// }
+/// ```
 public final class Fallback<Context>: BuiltInBehaviorTask<Context> {
 
+    /// The child tasks to try in sequence.
     public let children: [BehaviorTask<Context>]
 
+    /// Creates a fallback with an array of tasks.
+    ///
+    /// - Parameter children: The tasks to try in order.
     public init(_ children: [BehaviorTask<Context>]) {
         self.children = children
         super.init()
@@ -20,6 +44,9 @@ public final class Fallback<Context>: BuiltInBehaviorTask<Context> {
         }
     }
 
+    /// Creates a fallback using a result builder.
+    ///
+    /// - Parameter children: A result builder closure that returns the tasks to try.
     public init(@BehaviorTreeBuilder<Context> _ children: () -> [BehaviorTask<Context>]) {
         self.children = children()
         super.init()

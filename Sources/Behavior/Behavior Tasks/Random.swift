@@ -1,22 +1,60 @@
 import Foundation
 
-/// The `Random` task randomly selects and runs one of its children. It returns the same status as
-/// the selected child; it succeeds when the selected child succeeds and fails when the selected child fails.
+/// A utility task that randomly selects and executes one child.
 ///
-/// An optional weight can be specified for each child in order to define a probability distribution for the
-/// selection. Higher weight value means higher chance of being selected.
+/// The `Random` task picks one child at random (optionally using weights) and executes it.
+/// It returns the result of the selected child. The selection happens once when the task
+/// starts and persists until reset.
 ///
-/// Returns:
-/// - `.running` if
-/// - `.succeeded` if
-/// - `.failed` if
+/// ## Behavior
 ///
+/// - Randomly selects one child (with optional weights)
+/// - Executes the selected child
+/// - Returns the selected child's result
+/// - Selection is made once and cached until reset
+///
+/// ## Weighted Selection
+///
+/// Provide a `weights` array to control probability distribution. Higher weights
+/// increase the chance of selection. Weights don't need to sum to 1.
+///
+/// ## Returns
+///
+/// - `.running` if the selected child is running
+/// - `.succeeded` if the selected child has succeeded
+/// - `.failed` if the selected child has failed or no children exist
+///
+/// ## Example
+///
+/// ```swift
+/// // Equal probability
+/// Random {
+///     TauntA()
+///     TauntB()
+///     TauntC()
+/// }
+///
+/// // Weighted selection (60% TauntA, 30% TauntB, 10% TauntC)
+/// Random(weights: [0.6, 0.3, 0.1]) {
+///     TauntA()
+///     TauntB()
+///     TauntC()
+/// }
+/// ```
 public final class Random<Context>: BuiltInBehaviorTask<Context> {
 
+    /// Optional weights for probability distribution.
     public let weights: [Double]?
+
+    /// The child tasks to choose from.
     public let children: [BehaviorTask<Context>]
     private var selectedTask: BehaviorTask<Context>?
 
+    /// Creates a random selector with an array of tasks.
+    ///
+    /// - Parameters:
+    ///   - weights: Optional weights for each child (must match the number of children).
+    ///   - children: The tasks to choose from.
     public init(weights: [Double]? = nil, _ children: [BehaviorTask<Context>]) {
         self.weights = weights
         self.children = children
@@ -24,6 +62,11 @@ public final class Random<Context>: BuiltInBehaviorTask<Context> {
         selectTask()
     }
 
+    /// Creates a random selector using a result builder.
+    ///
+    /// - Parameters:
+    ///   - weights: Optional weights for each child (must match the number of children).
+    ///   - children: A result builder closure that returns the tasks to choose from.
     public init(
         weights: [Double]? = nil,
         @BehaviorTreeBuilder<Context> _ children: () -> [BehaviorTask<Context>]

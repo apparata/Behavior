@@ -1,17 +1,36 @@
 import Foundation
 
-/// The `Not` task inverts the completion state of its child.
-/// It succeeds when the child fails and fails when the child succeeds.
+/// A decorator task that inverts the result of its child.
 ///
-/// Returns:
-/// - `.running` when the child is running.
-/// - `.succeeded` when the child has failed.
-/// - `.failed` when the child has succeeded.
+/// The `Not` task (also known as "Inverter") flips the success/failure state of its child.
+/// It's useful for creating negative conditions or inverting logic.
 ///
+/// ## Behavior
+///
+/// - Executes the child task
+/// - Returns `.succeeded` when child returns `.failed`
+/// - Returns `.failed` when child returns `.succeeded`
+/// - Passes through `.running` unchanged
+///
+/// ## Returns
+///
+/// - `.running` when the child is running
+/// - `.succeeded` when the child has failed
+/// - `.failed` when the child has succeeded
+///
+/// ## Example
+///
+/// ```swift
+/// Not(HasAmmo())  // Succeeds when player has NO ammo
+/// ```
 public final class Not<Context>: BuiltInBehaviorTask<Context> {
 
+    /// The child task whose result will be inverted.
     public let child: BehaviorTask<Context>
 
+    /// Creates an inverter decorator.
+    ///
+    /// - Parameter child: The task whose result will be inverted.
     public init(_ child: BehaviorTask<Context>) {
         self.child = child
     }

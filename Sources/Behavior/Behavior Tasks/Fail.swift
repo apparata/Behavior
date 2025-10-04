@@ -1,10 +1,27 @@
 import Foundation
 
-/// The `Fail` task does nothing and returns `.failed`.
+/// A control task that always fails immediately.
 ///
-/// Returns:
-/// - `.failed`
+/// The `Fail` task is a simple task that does nothing and immediately returns `.failed`.
+/// It's useful for testing, placeholder logic, or forcing a failure state in a tree.
 ///
+/// ## Behavior
+///
+/// - Does nothing
+/// - Returns `.failed` immediately
+///
+/// ## Returns
+///
+/// - `.failed` (always)
+///
+/// ## Example
+///
+/// ```swift
+/// Sequence {
+///     CheckCondition()
+///     Fail()  // Force sequence to fail
+/// }
+/// ```
 public final class Fail<Context>: BuiltInBehaviorTask<Context> {
     public override func run(
         for context: Context,

@@ -1,16 +1,42 @@
 import Foundation
 
-/// The `Subtree` task runs the named behavior tree.
+/// References and executes a named tree by name.
 ///
-/// Returns:
-/// - `.running` if the tree is running.
-/// - `.succeeded` if the tree has succeeded.
-/// - `.failed` if the tree has failed, or if there is no tree matching the name.
+/// The `Subtree` task allows you to reference and execute a tree defined elsewhere
+/// in the behavior. This enables code reuse and modular behavior design.
 ///
+/// ## Behavior
+///
+/// - Looks up the tree by name in the behavior's tree dictionary
+/// - Executes the referenced tree
+/// - Returns `.failed` if no tree with the given name exists
+///
+/// ## Returns
+///
+/// - `.running` if the referenced tree is running
+/// - `.succeeded` if the referenced tree has succeeded
+/// - `.failed` if the referenced tree has failed, or if no tree matches the name
+///
+/// ## Example
+///
+/// ```swift
+/// Tree("Root") {
+///     Subtree("Attack")    // References "Attack" tree defined elsewhere
+/// }
+///
+/// Tree("Attack") {
+///     FindTarget()
+///     DealDamage()
+/// }
+/// ```
 public final class Subtree<Context>: BuiltInBehaviorTask<Context> {
 
+    /// The name of the tree to execute.
     private let name: String
 
+    /// Creates a subtree reference.
+    ///
+    /// - Parameter name: The name of the tree to execute.
     public init(_ name: String) {
         self.name = name
     }

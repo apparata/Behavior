@@ -1,17 +1,41 @@
 import Foundation
 
-/// The `Race` task runs all its children at the same time. It succeeds on the first child that succeeds
-/// and it fails when all the children fail.
+/// A composite task that races children, succeeding on the first success.
 ///
-/// Returns:
-/// - `.running` if at least one child is running and none has succeeded.
-/// - `.succeeded` if one child has succeeded.
-/// - `.failed` if all the children have failed.
+/// The `Race` task runs all its children concurrently and completes as soon as
+/// one child succeeds. It only fails if all children fail.
 ///
+/// ## Behavior
+///
+/// - Executes all children every tick (until completion)
+/// - Stops and returns `.succeeded` immediately when any child succeeds
+/// - Returns `.failed` only when all children have failed
+/// - Useful for trying multiple approaches simultaneously
+///
+/// ## Returns
+///
+/// - `.running` if at least one child is running and none has succeeded
+/// - `.succeeded` if any child has succeeded
+/// - `.failed` if all children have failed
+///
+/// ## Example
+///
+/// ```swift
+/// Race {
+///     FindPathA()        // Try route A
+///     FindPathB()        // Try route B simultaneously
+///     FindPathC()        // Try route C simultaneously
+/// }
+/// // Succeeds as soon as any path is found
+/// ```
 public final class Race<Context>: BuiltInBehaviorTask<Context> {
 
+    /// The child tasks to race.
     public let children: [BehaviorTask<Context>]
 
+    /// Creates a race task with an array of tasks.
+    ///
+    /// - Parameter children: The tasks to race against each other.
     public init(_ children: [BehaviorTask<Context>]) {
         self.children = children
         super.init()
@@ -20,6 +44,9 @@ public final class Race<Context>: BuiltInBehaviorTask<Context> {
         }
     }
 
+    /// Creates a race task using a result builder.
+    ///
+    /// - Parameter children: A result builder closure that returns the tasks to race.
     public init(@BehaviorTreeBuilder<Context> _ children: () -> [BehaviorTask<Context>]) {
         self.children = children()
         super.init()

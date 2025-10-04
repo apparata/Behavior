@@ -1,26 +1,41 @@
 import Foundation
 
-/// The `SucceedParent` task will force a tagged parent to complete with `.succeeded` on the next tick.
+/// A control task that forces a tagged parent task to succeed.
 ///
-/// NOTE: Only applies within a tree and does not cross subtree boundaries.
+/// The `SucceedParent` task searches up the tree hierarchy for a parent with a matching tag
+/// and forces it to complete with `.succeeded` on the next tick. This allows breaking out of
+/// loops or sequences early with a success state.
 ///
-/// Returns:
-/// - `.running` if the tagged parent was found.
-/// - `.failed` if the tagged parent was not found.
+/// ## Behavior
 ///
-/// **Example:**
+/// - Searches up the parent hierarchy for a task with the specified tag
+/// - Sets the tagged parent's state to `.succeeded`
+/// - Returns `.running` if parent was found (parent will complete next tick)
+/// - Returns `.failed` if no matching parent was found
+///
+/// ## Limitations
+///
+/// - Only searches within the current tree (does not cross subtree boundaries)
+/// - The parent must be tagged using `.tag()` method
+///
+/// ## Returns
+///
+/// - `.running` if the tagged parent was found
+/// - `.failed` if the tagged parent was not found
+///
+/// ## Example
 ///
 /// ```swift
 /// While(SomeCondition()) {
 ///     Fallback {
 ///         SomeTask()
-///         SucceedParent("loop")
+///         SucceedParent("loop")  // Exits the While loop successfully
 ///     }
 /// }.tag("loop")
 /// ```
-///
 public final class SucceedParent<Context>: BuiltInBehaviorTask<Context> {
 
+    /// The tag of the parent task to succeed.
     public let parentTag: Tag
 
     public init(_ parentTag: Tag) {
