@@ -36,7 +36,7 @@ public final class FailParent<Context>: BuiltInBehaviorTask<Context> {
         var upstreamTask: BehaviorTask<Context>? = self.parent
 
         while upstreamTask != nil {
-            if upstreamTask?.tag == tag {
+            if upstreamTask?.tag == parentTag {
                 upstreamTask?.state = .failed
                 return .running
             } else {
