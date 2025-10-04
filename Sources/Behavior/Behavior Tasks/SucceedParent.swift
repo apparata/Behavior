@@ -23,7 +23,7 @@ public final class SucceedParent<Context>: BuiltInBehaviorTask<Context> {
 
     public let parentTag: Tag
 
-    init(_ parentTag: Tag) {
+    public init(_ parentTag: Tag) {
         self.parentTag = parentTag
     }
 
