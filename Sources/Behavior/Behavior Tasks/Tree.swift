@@ -41,7 +41,7 @@ public final class Tree<Context>: BuiltInBehaviorTask<Context> {
         time: BehaviorTime,
         behavior: Behavior<Context>
     ) -> BehaviorState {
-        sequence.run(for: context, time: time, behavior: behavior)
+        sequence.tick(for: context, time: time, behavior: behavior)
     }
 
     public override func reset() {
