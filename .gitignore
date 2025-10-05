@@ -1,35 +1,8 @@
-################################
-### Xcode project .gitignore ###
-################################
-
-### macOS ###
-
 .DS_Store
-
-### User settings and such ###
-
+/.build
+/Packages
 xcuserdata/
-
-### Build Artifacts ###
-
-*.hmap
-*.ipa
-*.dSYM.zip
-*.dSYM
-
-xcuserdata
-profile
-*.moved-aside
-DerivedData
-.idea/
-*.xccheckout
-build/
-
-### Swift Package Manager ###
-
-.build/
-
-### Playgrounds ###
-
-timeline.xctimeline
-playground.xcworkspace
+DerivedData/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
