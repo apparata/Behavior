@@ -16,7 +16,7 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
     }
 
@@ -30,7 +30,7 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
     }
 
@@ -46,9 +46,9 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.value == 42)
+        #expect(behavior.context.value == 42)
     }
 
     @Test("Action with time uses timing info")
@@ -63,9 +63,9 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: BehaviorTime(elapsed: 0.032, accumulated: 0, actual: 0))
+        let result = behavior.tick(time: BehaviorTime(elapsed: 0.032, accumulated: 0, actual: 0))
         #expect(result == .succeeded)
-        #expect(behavior!.context.value == 32)
+        #expect(behavior.context.value == 32)
     }
 
     @Test("Log always succeeds")
@@ -77,7 +77,7 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
     }
 
@@ -91,7 +91,7 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
     }
 
@@ -117,10 +117,10 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.executed.count == 1)
-        #expect(["A", "B", "C"].contains(behavior!.context.executed[0]))
+        #expect(behavior.context.executed.count == 1)
+        #expect(["A", "B", "C"].contains(behavior.context.executed[0]))
     }
 
     @Test("Random with weights respects distribution")
@@ -146,9 +146,9 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.executed == ["A"])
+        #expect(behavior.context.executed == ["A"])
     }
 
     @Test("Random returns child result")
@@ -162,7 +162,7 @@ struct UtilityTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
     }
 
@@ -180,14 +180,14 @@ struct UtilityTasksTests {
             }
         }
 
-        _ = behavior!.tick(time: time)
-        #expect(behavior!.context.value == 1)
+        _ = behavior.tick(time: time)
+        #expect(behavior.context.value == 1)
 
-        _ = behavior!.tick(time: time)
-        #expect(behavior!.context.value == 2)
+        _ = behavior.tick(time: time)
+        #expect(behavior.context.value == 2)
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.value == 3)
+        #expect(behavior.context.value == 3)
     }
 }

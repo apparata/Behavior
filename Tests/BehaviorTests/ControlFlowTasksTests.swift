@@ -19,7 +19,7 @@ struct ControlFlowTasksTests {
                     }
                 }
             }
-        }!
+        }
 
         _ = behavior.tick(time: time)
         #expect(behavior.context.value == 1)
@@ -53,13 +53,13 @@ struct ControlFlowTasksTests {
             }
         }
 
-        _ = behavior!.tick(time: time)
-        _ = behavior!.tick(time: time)
-        let result = behavior!.tick(time: time)
+        _ = behavior.tick(time: time)
+        _ = behavior.tick(time: time)
+        let result = behavior.tick(time: time)
 
         #expect(result == .succeeded)
-        #expect(behavior!.context.value == 3)
-        #expect(behavior!.context.executed == ["1", "2", "3"])
+        #expect(behavior.context.value == 3)
+        #expect(behavior.context.executed == ["1", "2", "3"])
     }
 
     @Test("Repeat fails when sequence fails")
@@ -77,13 +77,13 @@ struct ControlFlowTasksTests {
             }
         }
 
-        _ = behavior!.tick(time: time)
-        _ = behavior!.tick(time: time)
-        let result = behavior!.tick(time: time)
+        _ = behavior.tick(time: time)
+        _ = behavior.tick(time: time)
+        let result = behavior.tick(time: time)
 
         #expect(result == .failed)
-        #expect(behavior!.context.value == 3)
-        #expect(behavior!.context.executed == ["1", "2", "3"])
+        #expect(behavior.context.value == 3)
+        #expect(behavior.context.executed == ["1", "2", "3"])
     }
 
     @Test("Subtree executes named tree")
@@ -102,9 +102,9 @@ struct ControlFlowTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.executed == ["Other"])
+        #expect(behavior.context.executed == ["Other"])
     }
 
     @Test("Subtree fails when tree not found")
@@ -116,7 +116,7 @@ struct ControlFlowTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
     }
 
@@ -132,11 +132,11 @@ struct ControlFlowTasksTests {
             }
         }
 
-        _ = behavior!.tick(time: time)
-        #expect(behavior!.context.value == 1)
+        _ = behavior.tick(time: time)
+        #expect(behavior.context.value == 1)
 
-        behavior!.reset()
-        _ = behavior!.tick(time: time)
-        #expect(behavior!.context.value == 2)
+        behavior.reset()
+        _ = behavior.tick(time: time)
+        #expect(behavior.context.value == 2)
     }
 }

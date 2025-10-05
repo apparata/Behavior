@@ -15,7 +15,7 @@ struct ControlTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
     }
 
@@ -28,7 +28,7 @@ struct ControlTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
     }
 
@@ -41,10 +41,10 @@ struct ControlTasksTests {
             }
         }
 
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .running)
 
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .running)
     }
 
@@ -63,17 +63,17 @@ struct ControlTasksTests {
             }
         }
 
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .running)
-        #expect(behavior!.context.value == 1)
+        #expect(behavior.context.value == 1)
 
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .running)
-        #expect(behavior!.context.value == 2)
+        #expect(behavior.context.value == 2)
 
-        let result3 = behavior!.tick(time: time)
+        let result3 = behavior.tick(time: time)
         #expect(result3 == .succeeded)
-        #expect(behavior!.context.value == 3)
+        #expect(behavior.context.value == 3)
     }
 
     @Test("SucceedParent fails when parent not found")
@@ -85,7 +85,7 @@ struct ControlTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
     }
 
@@ -104,17 +104,17 @@ struct ControlTasksTests {
             }
         }
 
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .running)
-        #expect(behavior!.context.value == 1)
+        #expect(behavior.context.value == 1)
 
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .running)
-        #expect(behavior!.context.value == 2)
+        #expect(behavior.context.value == 2)
 
-        let result3 = behavior!.tick(time: time)
+        let result3 = behavior.tick(time: time)
         #expect(result3 == .failed)
-        #expect(behavior!.context.value == 3)
+        #expect(behavior.context.value == 3)
     }
 
     @Test("FailParent fails when parent not found")
@@ -126,7 +126,7 @@ struct ControlTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
     }
 
@@ -147,7 +147,7 @@ struct ControlTasksTests {
         }
 
         // Should fail because it can't find the parent across subtree boundary
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
     }
 
@@ -169,8 +169,8 @@ struct ControlTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.value == 1)
+        #expect(behavior.context.value == 1)
     }
 }

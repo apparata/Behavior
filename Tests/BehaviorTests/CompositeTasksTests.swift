@@ -33,9 +33,9 @@ struct CompositeTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.executed == ["A", "B", "C"])
+        #expect(behavior.context.executed == ["A", "B", "C"])
     }
 
     @Test("Sequence fails when a child fails")
@@ -60,9 +60,9 @@ struct CompositeTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
-        #expect(behavior!.context.executed == ["A", "B"])
+        #expect(behavior.context.executed == ["A", "B"])
     }
 
     @Test("Fallback succeeds on first success")
@@ -87,9 +87,9 @@ struct CompositeTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.executed == ["A", "B"])
+        #expect(behavior.context.executed == ["A", "B"])
     }
 
     @Test("Fallback fails when all children fail")
@@ -114,9 +114,9 @@ struct CompositeTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
-        #expect(behavior!.context.executed == ["A", "B", "C"])
+        #expect(behavior.context.executed == ["A", "B", "C"])
     }
 
     @Test("Parallel succeeds when all children succeed")
@@ -141,9 +141,9 @@ struct CompositeTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.executed == ["A", "B", "C"])
+        #expect(behavior.context.executed == ["A", "B", "C"])
     }
 
     @Test("Parallel fails immediately when a child fails")
@@ -168,9 +168,9 @@ struct CompositeTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
-        #expect(behavior!.context.executed == ["A", "B"])
+        #expect(behavior.context.executed == ["A", "B"])
     }
 
     @Test("Race succeeds on first success")
@@ -195,9 +195,9 @@ struct CompositeTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.executed == ["A", "B"])
+        #expect(behavior.context.executed == ["A", "B"])
     }
 
     @Test("Race fails when all children fail")
@@ -222,8 +222,8 @@ struct CompositeTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
-        #expect(behavior!.context.executed == ["A", "B", "C"])
+        #expect(behavior.context.executed == ["A", "B", "C"])
     }
 }

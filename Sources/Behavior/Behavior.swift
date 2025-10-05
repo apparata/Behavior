@@ -59,7 +59,7 @@ public class Behavior<Context> {
     ///   - root: The name of the root tree to execute (default: "Root").
     ///   - iterations: How many times to execute the root tree (default: once).
     ///   - trees: A dictionary mapping tree names to tree instances.
-    public init?(
+    public init(
         for context: Context,
         root: BehaviorTreeName = "Root",
         iterations: BehaviorIterations = .count(1),
@@ -80,7 +80,7 @@ public class Behavior<Context> {
     ///   - root: The name of the root tree to execute (default: "Root").
     ///   - iterations: How many times to execute the root tree (default: once).
     ///   - builder: A result builder closure that returns a dictionary of trees.
-    public init?(
+    public init(
         for context: Context,
         root: BehaviorTreeName = "Root",
         iterations: BehaviorIterations = .count(1),

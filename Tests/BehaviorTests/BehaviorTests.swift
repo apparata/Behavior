@@ -36,9 +36,8 @@ struct BehaviorTests {
             }
         }
 
-        #expect(behavior != nil)
-        #expect(behavior!.trees.count == 1)
-        #expect(behavior!.trees["Root"] != nil)
+        #expect(behavior.trees.count == 1)
+        #expect(behavior.trees["Root"] != nil)
     }
 
     @Test("Behavior executes while loop with custom tasks")
@@ -54,14 +53,14 @@ struct BehaviorTests {
         }
 
         // First tick: condition true, sequence runs, returns .running to continue loop
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .running)
 
         // Kill the entity so condition fails
         npc.health = 0
 
         // Second tick: condition false, while loop exits with success
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .succeeded)
     }
 
@@ -78,7 +77,7 @@ struct BehaviorTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
     }
 
@@ -92,14 +91,14 @@ struct BehaviorTests {
             }
         }
 
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .succeeded)
-        #expect(behavior!.state == .succeeded)
+        #expect(behavior.state == .succeeded)
 
-        behavior!.reset()
-        #expect(behavior!.state == nil)
+        behavior.reset()
+        #expect(behavior.state == nil)
 
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .succeeded)
     }
 
@@ -113,7 +112,7 @@ struct BehaviorTests {
             }
         }
 
-        let result = behavior!.tick()
+        let result = behavior.tick()
         #expect(result == .succeeded)
     }
 
@@ -131,12 +130,12 @@ struct BehaviorTests {
             }
         }
 
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .succeeded)
         #expect(tickCount == 1)
 
         // Should not re-execute
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .succeeded)
         #expect(tickCount == 1)
     }

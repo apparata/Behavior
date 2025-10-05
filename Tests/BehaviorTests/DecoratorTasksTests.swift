@@ -15,7 +15,7 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .failed)
     }
 
@@ -28,7 +28,7 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
     }
 
@@ -41,7 +41,7 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .running)
     }
 
@@ -54,7 +54,7 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
     }
 
@@ -67,7 +67,7 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
     }
 
@@ -80,16 +80,16 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result1 = behavior!.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.016, actual: 0))
+        let result1 = behavior.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.016, actual: 0))
         #expect(result1 == .running)
 
-        let result2 = behavior!.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.032, actual: 0))
+        let result2 = behavior.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.032, actual: 0))
         #expect(result2 == .running)
 
-        let result3 = behavior!.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.048, actual: 0))
+        let result3 = behavior.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.048, actual: 0))
         #expect(result3 == .running)
 
-        let result4 = behavior!.tick(time: BehaviorTime(elapsed: 0.02, accumulated: 0.05, actual: 0))
+        let result4 = behavior.tick(time: BehaviorTime(elapsed: 0.02, accumulated: 0.05, actual: 0))
         #expect(result4 == .succeeded)
     }
 
@@ -102,13 +102,13 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .running)
 
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .running)
 
-        let result3 = behavior!.tick(time: time)
+        let result3 = behavior.tick(time: time)
         #expect(result3 == .succeeded)
     }
 
@@ -124,9 +124,9 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: time)
+        let result = behavior.tick(time: time)
         #expect(result == .succeeded)
-        #expect(behavior!.context.value == 1)
+        #expect(behavior.context.value == 1)
     }
 
     @Test("Retry retries on failure")
@@ -141,13 +141,13 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .running)
-        #expect(behavior!.context.value == 1)
+        #expect(behavior.context.value == 1)
 
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .succeeded)
-        #expect(behavior!.context.value == 2)
+        #expect(behavior.context.value == 2)
     }
 
     @Test("Retry fails after max attempts")
@@ -162,15 +162,15 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result1 = behavior!.tick(time: time)
+        let result1 = behavior.tick(time: time)
         #expect(result1 == .running)
 
-        let result2 = behavior!.tick(time: time)
+        let result2 = behavior.tick(time: time)
         #expect(result2 == .running)
 
-        let result3 = behavior!.tick(time: time)
+        let result3 = behavior.tick(time: time)
         #expect(result3 == .failed)
-        #expect(behavior!.context.value == 3)
+        #expect(behavior.context.value == 3)
     }
 
     @Test("Timeout succeeds within time limit")
@@ -182,7 +182,7 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result = behavior!.tick(time: BehaviorTime(elapsed: 0.05, accumulated: 0, actual: 0))
+        let result = behavior.tick(time: BehaviorTime(elapsed: 0.05, accumulated: 0, actual: 0))
         #expect(result == .succeeded)
     }
 
@@ -195,13 +195,13 @@ struct DecoratorTasksTests {
             }
         }
 
-        let result1 = behavior!.tick(time: BehaviorTime(elapsed: 0.03, accumulated: 0.03, actual: 0))
+        let result1 = behavior.tick(time: BehaviorTime(elapsed: 0.03, accumulated: 0.03, actual: 0))
         #expect(result1 == .running)
 
-        let result2 = behavior!.tick(time: BehaviorTime(elapsed: 0.03, accumulated: 0.06, actual: 0))
+        let result2 = behavior.tick(time: BehaviorTime(elapsed: 0.03, accumulated: 0.06, actual: 0))
         #expect(result2 == .running)
 
-        let result3 = behavior!.tick(time: BehaviorTime(elapsed: 0.03, accumulated: 0.09, actual: 0))
+        let result3 = behavior.tick(time: BehaviorTime(elapsed: 0.03, accumulated: 0.09, actual: 0))
         #expect(result3 == .failed)
     }
 
@@ -220,28 +220,28 @@ struct DecoratorTasksTests {
         }
 
         // First execution
-        let result1 = behavior!.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.016, actual: 0))
+        let result1 = behavior.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.016, actual: 0))
         #expect(result1 == .running)
-        #expect(behavior!.context.value == 1)
+        #expect(behavior.context.value == 1)
 
         // During cooldown - returns cached result without re-executing
-        let result2 = behavior!.tick(time: BehaviorTime(elapsed: 0.05, accumulated: 0.066, actual: 0))
+        let result2 = behavior.tick(time: BehaviorTime(elapsed: 0.05, accumulated: 0.066, actual: 0))
         #expect(result2 == .running)
-        #expect(behavior!.context.value == 1)
+        #expect(behavior.context.value == 1)
 
         // After cooldown expires - executes again
-        let result3 = behavior!.tick(time: BehaviorTime(elapsed: 0.06, accumulated: 0.126, actual: 0))
+        let result3 = behavior.tick(time: BehaviorTime(elapsed: 0.06, accumulated: 0.126, actual: 0))
         #expect(result3 == .running)
-        #expect(behavior!.context.value == 2)
+        #expect(behavior.context.value == 2)
 
         // After cooldown expires again - executes one more time
-        let result4 = behavior!.tick(time: BehaviorTime(elapsed: 0.1, accumulated: 0.226, actual: 0))
+        let result4 = behavior.tick(time: BehaviorTime(elapsed: 0.1, accumulated: 0.226, actual: 0))
         #expect(result4 == .running)
-        #expect(behavior!.context.value == 3)
+        #expect(behavior.context.value == 3)
 
         // Condition now fails, loop exits
-        let result5 = behavior!.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.326, actual: 0))
+        let result5 = behavior.tick(time: BehaviorTime(elapsed: 0.016, accumulated: 0.326, actual: 0))
         #expect(result5 == .succeeded)
-        #expect(behavior!.context.value == 3)
+        #expect(behavior.context.value == 3)
     }
 }
