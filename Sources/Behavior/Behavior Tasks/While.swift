@@ -9,15 +9,15 @@ import Foundation
 ///
 /// - Evaluates the condition task before each iteration
 /// - If condition succeeds, executes the sequence
-/// - If condition fails, returns `.failed`
+/// - If condition fails, returns `.succeeded` (loop completed normally)
 /// - Re-evaluates condition after sequence succeeds
 /// - Continues looping while condition succeeds
 ///
 /// ## Returns
 ///
-/// - `.running` if either the condition or the sequence is running
-/// - `.succeeded` if the sequence has succeeded (loop continues next tick)
-/// - `.failed` if either the condition or the sequence has failed
+/// - `.running` if the condition or sequence is running, or if the sequence succeeded (to continue looping)
+/// - `.succeeded` if the condition fails (loop exits normally)
+/// - `.failed` if the sequence fails
 ///
 /// ## Example
 ///
@@ -70,7 +70,7 @@ public final class While<Context>: BuiltInBehaviorTask<Context> {
     ) -> BehaviorState {
 
         if condition.state == .succeeded {
-            // We want to re-evaluate the state if last run succeeded.
+            // We want to re-evaluate the condition if last run succeeded.
             condition.reset()
         }
 
@@ -78,12 +78,27 @@ public final class While<Context>: BuiltInBehaviorTask<Context> {
         case .running:
             return .running
         case .failed:
-            return .failed
+            // Condition failed - loop exits normally
+            return .succeeded
         case .succeeded:
             break
         }
 
-        return sequence.tick(for: context, time: time, behavior: behavior)
+        let result = sequence.tick(for: context, time: time, behavior: behavior)
+
+        // Check if a child task (like SucceedParent) set our state
+        if state == .succeeded || state == .failed {
+            return state!
+        }
+
+        // Reset sequence after it succeeds so it can run again on next iteration
+        // Return .running to continue the loop
+        if result == .succeeded {
+            sequence.reset()
+            return .running
+        }
+
+        return result
     }
 
     public override func reset() {

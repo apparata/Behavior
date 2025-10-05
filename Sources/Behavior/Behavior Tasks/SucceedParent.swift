@@ -53,7 +53,7 @@ public final class SucceedParent<Context>: BuiltInBehaviorTask<Context> {
         while upstreamTask != nil {
             if upstreamTask?.tag == parentTag {
                 upstreamTask?.state = .succeeded
-                return .running
+                return .succeeded
             } else {
                 upstreamTask = upstreamTask?.parent
             }

@@ -93,6 +93,8 @@ public final class Repeat<Context>: BuiltInBehaviorTask<Context> {
                     return .succeeded
                 }
             }
+            // Reset sequence for next iteration
+            sequence.reset()
             return .running
         }
     }

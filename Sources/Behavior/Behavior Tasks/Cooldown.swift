@@ -79,8 +79,8 @@ public final class Cooldown<Context>: BuiltInBehaviorTask<Context> {
 
     public override func reset() {
         super.reset()
-        cooldownRemaining = 0
-        lastResult = nil
+        // Preserve cooldown state across resets - that's the whole point
+        // Only reset the child task
         child.reset()
     }
 }

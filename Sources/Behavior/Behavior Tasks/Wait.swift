@@ -59,8 +59,8 @@ public final class Wait<Context>: BuiltInBehaviorTask<Context> {
     ) -> BehaviorState {
         if !isFirstRun {
             accumulatedDuration += time.elapsed
-            accumulatedTicks += 1
         }
+        accumulatedTicks += 1
 
         if let duration, accumulatedDuration >= duration {
             return .succeeded
